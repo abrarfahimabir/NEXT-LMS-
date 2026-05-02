@@ -1,0 +1,121 @@
+:root {
+  color-scheme: dark;
+  /* Updated color palette per requirements */
+  --bg: #0a0a12;
+  --bg-soft: #12121f;
+  --primary: #6366f1;
+  --primary-soft: rgba(99, 102, 241, 0.15);
+  --panel: rgba(18, 18, 31, 0.74);
+  --panel-strong: rgba(255, 255, 255, 0.08);
+  --border: rgba(255, 255, 255, 0.06);
+  --border-light: #ffffff10;
+  --text: #f8fafc;
+  --muted: #9fb3c8;
+  --muted-soft: #c7d3df;
+  --accent: #42d392;
+  --accent-soft: rgba(66, 211, 146, 0.16);
+  --cyan: #67e8f9;
+  --gold: #f8c146;
+  --rose: #fb7185;
+  --violet: #a78bfa;
+  --indigo: #818cf8;
+  --shadow: 0 24px 80px rgba(6, 15, 28, 0.34);
+  --shadow-soft: 0 12px 36px rgba(6, 15, 28, 0.2);
+  --radius-xl: 32px;
+  --radius-lg: 24px;
+  --radius-md: 18px;
+  --radius-sm: 14px;
+  --container: 1280px;
+  --touch-target-min: 44px;
+}
+
+/* Base responsive improvements for all devices */
+@media (min-width: 320px) {
+  :root {
+    --container: 100%;
+  }
+}
+
+@media (min-width: 481px) {
+  :root {
+    --container: 100%;
+  }
+}
+
+@media (min-width: 769px) {
+  :root {
+    --container: 720px;
+  }
+}
+
+@media (min-width: 1025px) {
+  :root {
+    --container: 960px;
+  }
+}
+
+@media (min-width: 1281px) {
+  :root {
+    --container: 1280px;
+  }
+}
+
+@media (min-width: 1441px) {
+  :root {
+    --container: 1400px;
+  }
+}
+
+@media (min-width: 1921px) {
+  :root {
+    --container: 1600px;
+  }
+}
+
+@media (min-width: 2561px) {
+  :root {
+    --container: 1800px;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background:
+    radial-gradient(circle at top, rgba(99, 102, 241, 0.08), transparent 24%),
+    radial-gradient(circle at bottom right, rgba(167, 139, 250, 0.06), transparent 22%),
+    linear-gradient(180deg, #0a0a12 0%, #0a0a12 100%);
+  color: var(--text);
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+::selection {
+  background: rgba(66, 211, 146, 0.35);
+}

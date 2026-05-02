@@ -1,0 +1,156 @@
+/* Navbar styling migrated to Tailwind utility classes. */
+
+/* Humberbug Menu Icon Animation */
+
+#nav-icon1 {
+  width: 18px;
+  height: 16px;
+  display: inline-block;
+  position: relative;
+  margin: 0 auto;
+  transform: rotate(0deg);
+  transition: transform .3s ease-in-out;
+  cursor: pointer;
+}
+
+#nav-icon1 span {
+  display: block;
+  position: absolute;
+  height: 2px;
+  width: 100%;
+  background: currentColor;
+  border-radius: 999px;
+  opacity: 1;
+  left: 0;
+  transform: rotate(0deg);
+  transition: transform .25s ease-in-out, opacity .25s ease-in-out, left .25s ease-in-out, top .25s ease-in-out;
+}
+
+#nav-icon1 span:nth-child(1) {
+  top: 0;
+}
+
+#nav-icon1 span:nth-child(2) {
+  top: 7px;
+}
+
+#nav-icon1 span:nth-child(3) {
+  top: 14px;
+}
+
+#nav-icon1.open span:nth-child(1) {
+  top: 7px;
+  transform: rotate(45deg);
+}
+
+#nav-icon1.open span:nth-child(2) {
+  opacity: 0;
+  left: -35px;
+}
+
+#nav-icon1.open span:nth-child(3) {
+  top: 7px;
+  transform: rotate(-45deg);
+}
+
+.navbar__menu-button {
+  width: 2.9rem;
+  height: 2.9rem;
+  padding: 0;
+}
+
+.navbar__menu-button:hover {
+  color: #ffffff;
+}
+
+/* Profile Avatar Image */
+.navbar__avatar-img {
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 2px solid var(--border-light);
+}
+
+/* Sidebar Smooth Sliding Animation */
+.sidebar {
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.sidebar-overlay {
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Mobile Responsive Fixes */
+/* Push Profile icon and Menu button further to the left margin on mobile */
+@media (max-width: 768px) {
+  .navbar__toolbar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: 0;
+    padding-left: 0.25rem;
+  }
+  
+  .navbar__profile-wrapper {
+    margin-right: 0.25rem;
+  }
+  
+  .navbar__menu-button {
+    width: 2.4rem;
+    height: 2.4rem;
+    min-width: 2.4rem;
+  }
+  
+  .navbar__profile {
+    padding: 0.25rem 0.4rem 0.25rem 0.25rem;
+  }
+  
+  .navbar__avatar-img {
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+  
+  .navbar__avatar {
+    width: 1.8rem;
+    height: 1.8rem;
+    font-size: 0.8rem;
+  }
+  
+  .navbar__inner {
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .navbar__brand {
+    gap: 0.4rem;
+  }
+  
+  .navbar__logo {
+    width: 2rem;
+    height: 2rem;
+  }
+  
+  .navbar__title {
+    font-size: 0.9rem;
+  }
+  
+  .navbar__eyebrow {
+    font-size: 0.6rem;
+  }
+}
+
+/* Small Mobile Devices */
+@media (max-width: 480px) {
+  .navbar__toolbar {
+    gap: 0.35rem;
+  }
+  
+  .navbar__profile-name,
+  .navbar__profile-role {
+    display: none;
+  }
+  
+  .navbar__profile {
+    padding: 0.2rem 0.3rem 0.2rem 0.2rem;
+  }
+}
