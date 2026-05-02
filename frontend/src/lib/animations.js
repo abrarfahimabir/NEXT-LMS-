@@ -408,3 +408,255 @@ export const filterBarVariants = {
     },
   },
 };
+
+// ============================================
+// Premium Select Dropdown Variants
+// ============================================
+
+// Dropdown entrance with 3D rotation effect
+export const dropdownVariants = {
+  initial: {
+    opacity: 0,
+    y: -12,
+    scale: 0.96,
+    rotateX: -5,
+    transformOrigin: "top center",
+  },
+  animate: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    rotateX: 0,
+    transition: {
+      duration: 0.25,
+      ease: [0.25, 0.1, 0.25, 1],
+    },
+  },
+  exit: {
+    opacity: 0,
+    y: -8,
+    scale: 0.96,
+    rotateX: 5,
+    transition: {
+      duration: 0.2,
+      ease: "easeIn",
+    },
+  },
+};
+
+// Option item with staggered entrance
+export const optionVariants = {
+  initial: {
+    opacity: 0,
+    x: -12,
+    scale: 0.95,
+  },
+  animate: (index) => ({
+    opacity: 1,
+    x: 0,
+    scale: 1,
+    transition: {
+      delay: index * 0.04,
+      duration: 0.3,
+      ease: [0.25, 0.1, 0.25, 1],
+    },
+  }),
+  exit: {
+    opacity: 0,
+    x: -8,
+    scale: 0.95,
+    transition: {
+      duration: 0.15,
+      ease: "easeIn",
+    },
+  },
+  hover: {
+    scale: 1.02,
+    x: 4,
+    transition: {
+      duration: 0.2,
+      ease: "easeOut",
+    },
+  },
+};
+
+// Trigger button with magnetic hover
+export const triggerVariants = {
+  initial: {
+    opacity: 0,
+    y: 8,
+  },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 400,
+      damping: 30,
+    },
+  },
+  hover: {
+    scale: 1.01,
+    transition: {
+      duration: 0.2,
+      ease: "easeOut",
+    },
+  },
+  tap: {
+    scale: 0.985,
+    transition: {
+      duration: 0.1,
+      ease: "easeIn",
+    },
+  },
+  open: {
+    scale: 1,
+  },
+};
+
+// Selected checkmark spring animation
+export const checkmarkVariants = {
+  initial: {
+    scale: 0,
+    opacity: 0,
+  },
+  animate: {
+    scale: 1,
+    opacity: 1,
+    transition: {
+      type: "spring",
+      stiffness: 500,
+      damping: 25,
+    },
+  },
+  exit: {
+    scale: 0,
+    opacity: 0,
+    transition: {
+      duration: 0.1,
+      ease: "easeIn",
+    },
+  },
+};
+
+// Clear button micro-interactions
+export const clearVariants = {
+  initial: { opacity: 0, scale: 0.8 },
+  animate: { opacity: 1, scale: 1 },
+  exit: { opacity: 0, scale: 0.8 },
+  hover: { scale: 1.15 },
+  tap: { scale: 0.9 },
+};
+
+// Loading spinner animation
+export const spinnerVariants = {
+  animate: {
+    rotate: 360,
+    transition: {
+      duration: 1,
+      repeat: Infinity,
+      ease: "linear",
+    },
+  },
+};
+
+// Focus ring animation
+export const focusRingVariants = {
+  initial: { opacity: 0, scale: 0.95 },
+  animate: {
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.2 },
+  },
+  exit: {
+    opacity: 0,
+    scale: 0.95,
+    transition: { duration: 0.15 },
+  },
+};
+
+// Option group header reveal
+export const groupHeaderVariants = {
+  initial: { opacity: 0, x: -8 },
+  animate: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.2, ease: "easeOut" },
+  },
+  exit: {
+    opacity: 0,
+    x: -8,
+    transition: { duration: 0.15 },
+  },
+};
+
+// Error message shake animation
+export const selectErrorVariants = {
+  initial: { opacity: 0, y: -4 },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.2 },
+  },
+  exit: {
+    opacity: 0,
+    y: -4,
+    transition: { duration: 0.15 },
+  },
+};
+
+// Multi-select badge pulse
+export const multiBadgeVariants = {
+  initial: { scale: 0.8, opacity: 0 },
+  animate: {
+    scale: 1,
+    opacity: 1,
+    transition: {
+      type: "spring",
+      stiffness: 400,
+      damping: 25,
+    },
+  },
+  exit: {
+    scale: 0.8,
+    opacity: 0,
+    transition: { duration: 0.15 },
+  },
+};
+
+// Search input reveal animation
+export const searchInputVariants = {
+  initial: { opacity: 0, height: 0 },
+  animate: {
+    opacity: 1,
+    height: "auto",
+    transition: { duration: 0.2, ease: "easeOut" },
+  },
+  exit: {
+    opacity: 0,
+    height: 0,
+    transition: { duration: 0.15, ease: "easeIn" },
+  },
+};
+
+// Arrow rotation animation
+export const chevronVariants = {
+  closed: { rotate: 0 },
+  open: { rotate: 180 },
+};
+
+// Glow pulse for selected options in multi-select
+export const glowPulseVariants = {
+  animate: {
+    boxShadow: [
+      "0 0 20px rgba(99, 102, 241, 0.25)",
+      "0 0 30px rgba(99, 102, 241, 0.35)",
+      "0 0 20px rgba(99, 102, 241, 0.25)"
+    ],
+    transition: {
+      duration: 2,
+      repeat: Infinity,
+      ease: "easeInOut",
+    },
+  },
+};

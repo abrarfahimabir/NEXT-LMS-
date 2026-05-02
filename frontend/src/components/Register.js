@@ -70,9 +70,9 @@ const Register = () => {
         <div className="ui-card__body" style={{ padding: "2rem" }}>
           <div className="ui-badge">Onboard smart</div>
           <h1 className="ui-heading__title" style={{ marginTop: "1rem" }}>Create a role-aware LMS account.</h1>
-          <p className="ui-heading__text">
-            Learners can explore and enroll, while lead professionals get profile-first program ownership from day one.
-          </p>
+           <p className="ui-heading__text">
+             Students can explore and enroll, while instructors get profile-first program ownership from day one.
+           </p>
           <div className="stack-list" style={{ marginTop: "1.5rem" }}>
             {[
               "JWT auth with refresh-token flow",

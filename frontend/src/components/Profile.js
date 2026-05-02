@@ -173,7 +173,7 @@ const Profile = () => {
       <SectionHeading
         eyebrow="Profile Center"
         title="Manage your identity, professional journey, and account security."
-        description="Role-aware profile fields, quick password updates, and a cleaner snapshot of current learner activity."
+        description="Role-aware profile fields, quick password updates, and a cleaner snapshot of current student activity."
       />
 
       {message ? <div className="message-banner message-banner--success">{message}</div> : null}
@@ -209,7 +209,7 @@ const Profile = () => {
               </div>
               <div>
                 <h2 style={{ margin: 0 }}>{profile?.first_name || profile?.username}</h2>
-                <p className="subtle-text" style={{ textTransform: "capitalize" }}>{profile?.role === "instructor" ? "Lead Professional" : profile?.role}</p>
+                <p className="subtle-text" style={{ textTransform: "capitalize" }}>{profile?.role === "instructor" ? "Instructor" : profile?.role}</p>
                 <p className="status-note">{profile?.email}</p>
               </div>
             </div>

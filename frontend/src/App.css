@@ -190,6 +190,49 @@
   padding: 1.5rem;
 }
 
+/* Selection card with premium gradient border & glow for dropdown */
+.selection-card {
+  --selection-glow: rgba(99, 102, 241, 0.2);
+  background: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.065) 0%,
+    rgba(167, 139, 250, 0.04) 50%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  border-color: rgba(99, 102, 241, 0.18);
+  position: relative;
+  overflow: visible;
+}
+
+.selection-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-xl);
+  padding: 1.5px;
+  background: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.4) 0%,
+    rgba(167, 139, 250, 0.15) 50%,
+    transparent 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.7;
+  transition: opacity 0.35s ease;
+}
+
+.selection-card:hover::before {
+  opacity: 1;
+}
+
+.selection-card .ui-card__body {
+  padding: 1.5rem;
+}
+
 .ui-button {
   display: inline-flex;
   align-items: center;

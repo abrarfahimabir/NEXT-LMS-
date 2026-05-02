@@ -235,7 +235,7 @@ const CourseList = () => {
                         </div>
                         <div className="row-between">
                           <span className="subtle-text">{course.lesson_count || 0} modules</span>
-                          <span className="subtle-text">{course.enrollment_count || 0} learners</span>
+                          <span className="subtle-text">{course.enrollment_count || 0} students</span>
                         </div>
                         <div className="course-card__actions">
                           <Link to={`/courses/${course.id}`} style={{ flex: 1 }}>

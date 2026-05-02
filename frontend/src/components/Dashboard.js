@@ -209,7 +209,7 @@ const Dashboard = () => {
             status: course.status,
           })),
           recent_activity: [
-            { id: 1, message: "A new learner enrolled in Web Development Bootcamp" },
+             { id: 1, message: "A new student enrolled in Web Development Bootcamp" },
             { id: 2, message: "Python for Beginners reached 980 enrollments" },
             { id: 3, message: "UI/UX Design Masterclass received 12 new reviews" },
           ],
@@ -267,13 +267,13 @@ const Dashboard = () => {
   return (
     <div className="layout-stack">
       <SectionHeading
-        eyebrow={`${user?.role === "instructor" ? "Lead Professional" : user?.role === "student" ? "Learner" : user?.role || "User"} dashboard`}
-        title={isAdmin ? "Admin Control Center" : isInstructor ? "Lead Professional Dashboard" : "My Learning Dashboard"}
+        eyebrow={`${user?.role === "instructor" ? "Instructor" : user?.role === "student" ? "Student" : user?.role || "User"} dashboard`}
+        title={isAdmin ? "Admin Control Center" : isInstructor ? "Instructor Dashboard" : "My Learning Dashboard"}
         description={
           isAdmin
             ? "Complete platform analytics, user management, and program performance."
             : isInstructor
-            ? "Track your program performance, learner engagement, and earnings."
+            ? "Track your program performance, student engagement, and earnings."
             : "Track your learning progress, enrolled programs, and achievements."
         }
       />
@@ -525,7 +525,7 @@ const Dashboard = () => {
                 <motion.div variants={chartVariants} initial="initial" animate="animate">
                   <Card className="action-card">
                     <div className="inline-meta">
-                      <h3 style={{ margin: 0 }}>Lead Professional Actions</h3>
+                       <h3 style={{ margin: 0 }}>Instructor Actions</h3>
                       <FiSettings />
                     </div>
                     <p className="subtle-text">Manage your programs and generate reports.</p>

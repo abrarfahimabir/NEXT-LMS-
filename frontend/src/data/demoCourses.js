@@ -5,7 +5,7 @@ export const demoCourses = [
     instructor_name: "Sarah Khan",
     short_description: "Build responsive full-stack apps with React, Node, and deployment workflows.",
     description:
-      "From HTML fundamentals to API-driven interfaces, this bootcamp gives learners a project-first path into modern web engineering.",
+      "From HTML fundamentals to API-driven interfaces, this bootcamp gives students a project-first path into modern web engineering.",
     thumbnail_url:
       "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80",
     category_name: "Development",
@@ -59,7 +59,7 @@ export const demoCourses = [
     instructor_name: "Rafid Chowdhury",
     short_description: "Explore data cleaning, visualization, statistics, and entry-level machine learning concepts.",
     description:
-      "Learners work through notebook-driven lessons to understand how real-world datasets become actionable insights.",
+      "Students work through notebook-driven lessons to understand how real-world datasets become actionable insights.",
     thumbnail_url:
       "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80",
     category_name: "Data",

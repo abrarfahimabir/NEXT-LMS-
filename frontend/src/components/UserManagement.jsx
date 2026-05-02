@@ -178,16 +178,16 @@ const UserManagement = () => {
         class: "role-badge--admin",
         label: "Admin"
       },
-      instructor: {
-        icon: <FiBookOpen />,
-        class: "role-badge--instructor",
-        label: "Lead Professional"
-      },
-      student: {
-        icon: <FiUser />,
-        class: "role-badge--student",
-        label: "Learner"
-      },
+       instructor: {
+         icon: <FiBookOpen />,
+         class: "role-badge--instructor",
+         label: "Instructor"
+       },
+       student: {
+         icon: <FiUser />,
+         class: "role-badge--student",
+         label: "Student"
+       },
     };
     const config = configs[role] || configs.student;
     
@@ -232,9 +232,9 @@ const UserManagement = () => {
           className="filter-select"
         >
           <option value="">All Roles</option>
-          <option value="admin">Admin</option>
-          <option value="instructor">Lead Professional</option>
-          <option value="student">Learner</option>
+           <option value="admin">Admin</option>
+           <option value="instructor">Instructor</option>
+           <option value="student">Student</option>
         </select>
 
         {isAdmin && (
@@ -304,8 +304,8 @@ const UserManagement = () => {
                         onChange={(e) => handleRoleChange(user.id, e.target.value)}
                         className="role-select"
                       >
-                        <option value="student">Learner</option>
-                        <option value="instructor">Lead Professional</option>
+                         <option value="student">Student</option>
+                         <option value="instructor">Instructor</option>
                         <option value="admin">Admin</option>
                       </select>
                     ) : (
@@ -457,8 +457,8 @@ const UserManagement = () => {
                     }
                     disabled={loadingSubmit}
                   >
-                    <option value="student">Learner</option>
-                    <option value="instructor">Lead Professional</option>
+                     <option value="student">Student</option>
+                     <option value="instructor">Instructor</option>
                     <option value="admin">Admin</option>
                   </select>
                 </div>

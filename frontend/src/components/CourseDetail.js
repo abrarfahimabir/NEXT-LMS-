@@ -87,7 +87,7 @@ const CourseDetail = () => {
           <h1 className="ui-heading__title" style={{ marginTop: "1rem" }}>{course.title}</h1>
           <p className="ui-heading__text">{course.description}</p>
           <div className="detail-hero__stats inline-meta" style={{ marginTop: "1.5rem" }}>
-            <span className="inline-meta"><FiUsers /> {course.enrollment_count || 0} learners</span>
+            <span className="inline-meta"><FiUsers /> {course.enrollment_count || 0} students</span>
             <span className="inline-meta"><FiPlayCircle /> {course.lesson_count || 0} units</span>
             <span className="inline-meta"><FiStar /> 4.9 rating</span>
           </div>
@@ -158,9 +158,9 @@ const CourseDetail = () => {
 
           <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }}>
             <Card className="side-card">
-              <h3 style={{ marginTop: 0 }}>Lead Professional</h3>
-              <p>{course.instructor_name}</p>
-              <p className="subtle-text">Program ownership respects lead professional editing on the backend.</p>
+               <h3 style={{ marginTop: 0 }}>Instructor</h3>
+               <p>{course.instructor_name}</p>
+               <p className="subtle-text">Program ownership respects instructor editing on the backend.</p>
               <div className="summary-box" style={{ marginTop: "1rem" }}>
                 Reviews, certificates, quizzes, and bookmarks now have dedicated UI space for the next iteration.
               </div>

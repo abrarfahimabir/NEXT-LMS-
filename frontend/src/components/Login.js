@@ -50,7 +50,7 @@ const Login = () => {
 
         <div className="metric-grid metric-grid--3">
           {[
-            { label: "Learners", value: "5.4k active participants", icon: FiTrendingUp },
+             { label: "Students", value: "5.4k active participants", icon: FiTrendingUp },
             { label: "Programs", value: "120+ structured tracks", icon: FiPlayCircle },
             { label: "Completion", value: "92% progress sync", icon: FiArrowRight },
           ].map((item) => (

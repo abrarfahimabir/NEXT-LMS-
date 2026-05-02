@@ -440,7 +440,7 @@ const GenerateReports = () => {
       id: "enrollments",
       label: "Enrollment Report",
       icon: FiActivity,
-      description: "Learner enrollment history and patterns"
+       description: "Student enrollment history and patterns"
     },
   ];
 
@@ -840,15 +840,15 @@ const GenerateReports = () => {
                 <div className="table-responsive">
                   <table className="data-table">
                     <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>Program Title</th>
-                        <th>Category</th>
-                        <th>Lead Professional</th>
-                        <th>Status</th>
-                        <th>Enrollments</th>
-                        <th>Created</th>
-                      </tr>
+                       <tr>
+                         <th>ID</th>
+                         <th>Program Title</th>
+                         <th>Category</th>
+                         <th>Instructor</th>
+                         <th>Status</th>
+                         <th>Enrollments</th>
+                         <th>Created</th>
+                       </tr>
                     </thead>
                     <tbody>
                       {reportData.courses?.map((course) => (
@@ -885,13 +885,13 @@ const GenerateReports = () => {
                 <div className="table-responsive">
                   <table className="data-table">
                     <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>Learner</th>
-                        <th>Program</th>
-                        <th>Lead Professional</th>
-                        <th>Enrolled On</th>
-                      </tr>
+                       <tr>
+                         <th>ID</th>
+                         <th>Student</th>
+                         <th>Program</th>
+                         <th>Instructor</th>
+                         <th>Enrolled On</th>
+                       </tr>
                     </thead>
                     <tbody>
                       {reportData.enrollments?.map((enrollment) => (

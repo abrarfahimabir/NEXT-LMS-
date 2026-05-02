@@ -178,9 +178,9 @@ return (
                     )}
                     <div>
                       <span className="navbar__profile-name">{displayName}</span>
-                      <span className="navbar__profile-role">
-                        {user?.role === "instructor" ? "Lead Professional" : user?.role === "student" ? "Learner" : user?.role || "learner"}
-                      </span>
+                       <span className="navbar__profile-role">
+                         {user?.role === "instructor" ? "Instructor" : user?.role === "student" ? "Student" : user?.role || "student"}
+                       </span>
                     </div>
                     <FiChevronDown style={{ marginLeft: "0.25rem", transition: "transform 0.2s ease", transform: profileDropdownOpen ? "rotate(180deg)" : "rotate(0deg)" }} />
                   </motion.button>

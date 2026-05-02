@@ -85,7 +85,7 @@ const EnrolledStudents = () => {
       await lmsApi.forceUnenroll(unenrollDialog.enrollmentId);
       setEnrollments(enrollments.filter(e => e.id !== unenrollDialog.enrollmentId));
       setUnenrollDialog({ open: false, enrollmentId: null, studentName: "", courseTitle: "" });
-      success("Learner removed from program", "Success");
+       success("Student removed from program", "Success");
     } catch (err) {
       showError(err.response?.data?.error || "Failed to unenroll student");
     } finally {
@@ -165,8 +165,8 @@ const EnrolledStudents = () => {
       
       <SectionHeading
         eyebrow="Enrollment Management"
-        title="Enrolled Learners"
-        description="View and manage all learner enrollments across programs."
+        title="Enrolled Students"
+        description="View and manage all student enrollments across programs."
       />
 
       {error ? <div className="message-banner message-banner--error">{error}</div> : null}
@@ -236,14 +236,14 @@ const EnrolledStudents = () => {
         <div className="table-card">
           <table className="data-table">
             <thead>
-              <tr>
-                <th>Learner</th>
-                <th>Program</th>
-                <th>Lead Professional</th>
-                <th>Progress</th>
-                <th>Enrolled Date</th>
-                {(isAdmin || isInstructor) && <th>Actions</th>}
-              </tr>
+               <tr>
+                 <th>Student</th>
+                 <th>Program</th>
+                 <th>Instructor</th>
+                 <th>Progress</th>
+                 <th>Enrolled Date</th>
+                 {(isAdmin || isInstructor) && <th>Actions</th>}
+               </tr>
             </thead>
             <tbody>
               {filteredEnrollments.map((enrollment) => (
@@ -287,7 +287,7 @@ const EnrolledStudents = () => {
                         <button
                           onClick={() => confirmUnenroll(enrollment)}
                           className="action-btn action-btn--delete"
-                          title="Remove learner"
+                          title="Remove student"
                         >
                           <FiTrash2 />
                         </button>
@@ -354,7 +354,7 @@ const EnrolledStudents = () => {
         isOpen={unenrollDialog.open}
         onClose={() => setUnenrollDialog({ open: false, enrollmentId: null, studentName: "", courseTitle: "" })}
         onConfirm={handleUnenroll}
-        title="Remove Learner"
+        title="Remove Student"
         message={`Are you sure you want to remove "${unenrollDialog.studentName}" from "${unenrollDialog.courseTitle}"? This action cannot be undone.`}
         confirmText="Remove"
         cancelText="Cancel"

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-import React, { useEffect, useState } from "react";
-import { FiEdit2, FiPlus, FiSearch, FiTrash2, FiBookOpen, FiX, FiCheck, FiLoader, FiLayers, FiArrowRight, FiArrowLeft } from "react-icons/fi";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
+import { FiEdit2, FiPlus, FiSearch, FiTrash2, FiBookOpen, FiX, FiCheck, FiLoader, FiLayers, FiArrowRight, FiArrowLeft, FiBook } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
 import { useAuth } from "../context/AuthContext";
@@ -11,6 +11,7 @@ import SectionHeading from "./ui/SectionHeading";
 import Skeleton from "./ui/Skeleton";
 import ConfirmationDialog from "./ui/ConfirmationDialog";
 import ToastContainer, { useToast } from "./ui/Toast";
+import SelectDropdown from "./ui/SelectDropdown";
 
 const ModuleManagement = () => {
   const { user: currentUser } = useAuth();
@@ -27,6 +28,16 @@ const ModuleManagement = () => {
     description: "",
     order: 1,
   });
+
+  // Derived: convert courses to options format
+  const courseOptions = useMemo(() => {
+    return courses.map(course => ({
+      value: course.id,
+      label: course.title,
+      group: course.instructor_name || "Instructors",
+      icon: <FiBook size={14} />,
+    }));
+  }, [courses]);
 
   // Delete dialog
   const [deleteDialog, setDeleteDialog] = useState({ open: false, moduleId: null, moduleTitle: "" });
@@ -190,25 +201,19 @@ const ModuleManagement = () => {
         description="Create, edit, and organize modules within programs. Admins can manage all programs, lead professionals can manage their own."
       />
 
-      {error ? <div className="message-banner message-banner--error">{error}</div> : null}
-
-{/* Program Selection - Prominent Style */}
-      <Card className="selection-card">
-        <div className="course-select-wrap">
-          <label className="form-label">Select Program *</label>
-          <select
-            className="course-select"
-            value={selectedCourse?.id || ""}
-            onChange={(e) => handleCourseSelect(e.target.value)}
-          >
-            <option value="">Choose a program...</option>
-            {courses.map((course) => (
-              <option key={course.id} value={course.id}>
-                {course.title} ({course.instructor_name})
-              </option>
-            ))}
-          </select>
-        </div>
+      {/* Premium Program Selection Dropdown */}
+      <Card className="selection-card ui-card--padding-md">
+        <SelectDropdown
+          label="Select Program"
+          value={selectedCourse?.id || ""}
+          onChange={(value) => handleCourseSelect(value)}
+          options={courseOptions}
+          placeholder="Choose a program..."
+          searchable
+          size="md"
+          helperText="Select a program to manage its modules"
+          prefix={<FiBook size={16} />}
+        />
       </Card>
 
 {/* Modules for Selected Course - Enhanced Card Grid Style */}
@@ -343,7 +348,7 @@ const ModuleManagement = () => {
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   rows={3}
                   disabled={loadingSubmit}
-                  placeholder="What will learners learn in this module?"
+                   placeholder="What will students learn in this module?"
                 />
               </div>
 

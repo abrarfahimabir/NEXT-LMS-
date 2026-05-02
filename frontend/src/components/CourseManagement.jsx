@@ -310,7 +310,7 @@ const fetchCategories = async () => {
                   </div>
                   <div className="course-card-admin-bento__meta-item">
                     <FiUsers />
-                    <span>{course.enrollment_count || 0} learners</span>
+                    <span>{course.enrollment_count || 0} students</span>
                   </div>
                 </div>
                 
@@ -414,15 +414,15 @@ const fetchCategories = async () => {
                     ))}
                   </select>
                 </div>
-                <div className="form-group">
-                  <label>Lead Professional *</label>
-                  <select
-                    value={formData.instructor}
-                    onChange={(e) => setFormData({ ...formData, instructor: e.target.value })}
-                    required
-                    disabled={loadingSubmit}
-                  >
-                    <option value="">Select Lead Professional</option>
+                 <div className="form-group">
+                   <label>Instructor *</label>
+                   <select
+                     value={formData.instructor}
+                     onChange={(e) => setFormData({ ...formData, instructor: e.target.value })}
+                     required
+                     disabled={loadingSubmit}
+                   >
+                     <option value="">Select Instructor</option>
                     {instructors.map((inst) => (
                       <option key={inst.id} value={inst.id}>{inst.username}</option>
                     ))}
