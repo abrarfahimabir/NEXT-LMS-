@@ -37,7 +37,7 @@ Key capabilities include:
 - **Routing**: React Router DOM 6.20
 - **State/UI**: Framer Motion (animations), Axios (API), Recharts (charts), React Icons
 - **Auth**: JWT Decode
-
+ 
 ### Tools
 - PostCSS, Autoprefixer
 - Git (version control)
