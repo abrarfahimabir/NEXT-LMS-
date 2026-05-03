@@ -329,14 +329,14 @@ const SelectDropdown = ({
         <FiChevronDown className={`transition-transform ${isOpen ? 'rotate-180' : ''}`} />
       </motion.div>
 
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            className="premium-select__dropdown absolute z-50 w-full mt-1 bg-white border shadow-lg rounded-lg max-h-60 overflow-hidden"
-            initial={{ opacity: 0, scale: 0.95, y: -10 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: -10 }}
-          >
+       <AnimatePresence>
+         {isOpen && (
+           <motion.div
+             className="premium-select__dropdown absolute z-[9999] w-full mt-1 bg-white/20 backdrop-blur-md border border-white/20 shadow-lg rounded-lg max-h-60 overflow-hidden"
+             initial={{ opacity: 0, scale: 0.95, y: -10 }}
+             animate={{ opacity: 1, scale: 1, y: 0 }}
+             exit={{ opacity: 0, scale: 0.95, y: -10 }}
+           >
 
               {Object.entries(groupedOptions).map(([group, opts], groupIndex) => {
                 const optionIndexOffset = flatOptions.slice(0, focusedIndex + 1).filter(item => item.type !== 'group-header').length;
@@ -356,50 +356,49 @@ const SelectDropdown = ({
                       </motion.div>
                     )}
                     
-                    {opts.map((opt, idx) => {
-                      const flatIndex = flatOptions.findIndex(item => item.value === opt.value);
-                      const selected = isSelected(opt.value);
-                      const isFocused = focusedIndex === flatIndex;
-                      
-                      return (
-                        <motion.div
-                          key={opt.value}
-                          id={`option-${flatIndex}`}
-                          ref={(el) => { if (el) optionsRef.current[flatIndex] = el; }}
-                          className={`premium-select__option ${selected ? "premium-select__option--selected" : ""} ${isFocused ? "premium-select__option--focused" : ""} ${opt.disabled ? "premium-select__option--disabled" : ""}`}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            if (!opt.disabled) handleSelect(opt);
-                          }}
-                          role="option"
-                          aria-selected={selected}
-                          aria-disabled={opt.disabled}
-                          tabIndex={-1}
-                          initial={{ opacity: 0, x: -12, scale: 0.95 }}
-                          animate={{ 
-                            opacity: 1, 
-                            x: 0, 
-                            scale: 1,
-                            transition: {
-                              delay: flatIndex * 0.04,
-                              duration: 0.3,
-                              ease: [0.25, 0.1, 0.25, 1],
-                            },
-                          }}
-                          exit={{ 
-                            opacity: 0, 
-                            x: -8, 
-                            scale: 0.95,
-                            transition: { duration: 0.15 },
-                          }}
-                          whileHover={!opt.disabled ? {
-                            scale: 1.02,
-                            x: 4,
-                            transition: { duration: 0.2, ease: "easeOut" }
-                          } : {}}
-                          whileTap={!opt.disabled ? { scale: 0.97 } : {}}
-                          layout
-                        >
+                           {opts.map((opt, idx) => {
+                       const flatIndex = flatOptions.findIndex(item => item.value === opt.value);
+                       const selected = isSelected(opt.value);
+                       const isFocused = focusedIndex === flatIndex;
+                       
+                       return (
+                         <motion.div
+                           key={opt.value}
+                           id={`option-${flatIndex}`}
+                           ref={(el) => { if (el) optionsRef.current[flatIndex] = el; }}
+                           className={`premium-select__option ${selected ? "premium-select__option--selected" : ""} ${isFocused ? "premium-select__option--focused" : ""} ${opt.disabled ? "premium-select__option--disabled" : ""}`}
+                           onClick={(e) => {
+                             e.stopPropagation();
+                             if (!opt.disabled) handleSelect(opt);
+                           }}
+                           role="option"
+                           aria-selected={selected}
+                           aria-disabled={opt.disabled}
+                           tabIndex={-1}
+                           initial={{ opacity: 0, x: -12, scale: 0.95 }}
+                           animate={{ 
+                             opacity: 1, 
+                             x: 0, 
+                             scale: 1,
+                             transition: {
+                               delay: flatIndex * 0.04,
+                               duration: 0.3,
+                               ease: [0.25, 0.1, 0.25, 1],
+                             },
+                           }}
+                           exit={{ 
+                             opacity: 0, 
+                             x: -8, 
+                             scale: 0.95,
+                             transition: { duration: 0.15 },
+                           }}
+                            whileHover={!opt.disabled ? {
+                              scale: 1.01,
+                              transition: { duration: 0.2, ease: "easeOut" }
+                            } : {}}
+                           whileTap={!opt.disabled ? { scale: 0.99 } : {}}
+                           layout
+                         >
                           {opt.icon && (
                             <span className="premium-select__option-icon">
                               {opt.icon}

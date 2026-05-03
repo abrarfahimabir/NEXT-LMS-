@@ -660,3 +660,113 @@ export const glowPulseVariants = {
     },
   },
 };
+
+// Premium Grid Variants
+export const premiumGridVariants = {
+  initial: {
+    opacity: 0,
+    y: 20,
+  },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: [0.25, 0.46, 0.45, 0.94],
+    },
+  },
+};
+
+// Premium Card Variants with staggered entrance
+export const premiumCardVariants = {
+  initial: (index) => ({
+    opacity: 0,
+    y: 40,
+    scale: 0.95,
+    rotateX: 10,
+    transition: {
+      delay: index * 0.08,
+    },
+  }),
+  animate: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    rotateX: 0,
+    transition: {
+      type: "spring",
+      stiffness: 300,
+      damping: 20,
+    },
+  },
+  hover: {
+    y: -8,
+    scale: 1.02,
+    transition: {
+      duration: 0.4,
+      ease: [0.25, 0.46, 0.45, 0.94],
+    },
+  },
+  tap: {
+    scale: 0.98,
+  },
+};
+
+// Premium Button Variants with magnetic hover
+export const premiumButtonVariants = {
+  initial: {
+    opacity: 0,
+    y: 10,
+  },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 400,
+      damping: 25,
+    },
+  },
+  hover: {
+    scale: 1.03,
+    y: -2,
+    transition: {
+      duration: 0.3,
+      ease: "easeOut",
+    },
+  },
+  tap: {
+    scale: 0.97,
+  },
+};
+
+// Premium Dropdown Variants
+export const premiumDropdownVariants = {
+  initial: {
+    opacity: 0,
+    y: -12,
+    scale: 0.96,
+    rotateX: -5,
+    transformOrigin: "top center",
+  },
+  animate: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    rotateX: 0,
+    transition: {
+      duration: 0.25,
+      ease: [0.25, 0.1, 0.25, 1],
+    },
+  },
+  exit: {
+    opacity: 0,
+    y: -8,
+    scale: 0.96,
+    rotateX: 5,
+    transition: {
+      duration: 0.2,
+      ease: "easeIn",
+    },
+  },
+};

@@ -116,5 +116,6 @@ Key capabilities include:
 - Auth errors: Check JWT lifetimes and session keys.
 - Missing deps: Run `pip freeze > requirements.txt` after manual installs.
 
-Happy Learning! 🚀
+
+
 

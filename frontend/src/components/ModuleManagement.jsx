@@ -34,7 +34,7 @@ const ModuleManagement = () => {
     return courses.map(course => ({
       value: course.id,
       label: course.title,
-      group: course.instructor_name || "Instructors",
+      group: course.instructor_name || "All Course",
       icon: <FiBook size={14} />,
     }));
   }, [courses]);
@@ -248,15 +248,17 @@ const ModuleManagement = () => {
             </div>
           ) : modules.length > 0 ? (
             <motion.div layout className="module-list-admin">
-              {modules.map((module, index) => (
-                <motion.div
-                  key={module.id}
-                  layout
-                  initial={{ opacity: 0, y: 18 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.05 }}
-                  className="module-card-admin"
-                >
+           {modules.map((module, index) => (
+                 <motion.div
+                   key={module.id}
+                   layout
+                   initial={{ opacity: 0, y: 18 }}
+                   animate={{ opacity: 1, y: 0 }}
+                   transition={{ delay: index * 0.05 }}
+                   whileHover={{ y: -8, scale: 1.02 }}
+                   whileTap={{ scale: 0.98 }}
+                   className="module-card-admin"
+                 >
                   <div className="module-card-admin__number">
                     {index + 1}
                   </div>
