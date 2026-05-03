@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "https://next-lms.onrender.com";
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL ? process.env.REACT_APP_API_BASE_URL.trim() : "https://next-lms.onrender.com";
 
 const api = axios.create({
   baseURL: `${API_BASE_URL}/api`,
@@ -91,19 +91,16 @@ export const lmsApi = {
   updateProgress: (id, payload) => api.patch(`/lms/lesson-progress/${id}/`, payload),
   getAllEnrollments: (params) => api.get("/lms/enrollments/all/", { params }),
   forceUnenroll: (id) => api.delete(`/lms/enrollments/force-delete/${id}/`),
-  // Admin Course Management (Admin only)
   adminCourses: (params) => api.get("/lms/admin/courses/", { params }),
   adminCourse: (id) => api.get(`/lms/admin/courses/${id}/`),
   createCourse: (payload) => api.post("/lms/admin/courses/", payload),
   updateCourse: (id, payload) => api.put(`/lms/admin/courses/${id}/`, payload),
   deleteCourse: (id) => api.delete(`/lms/admin/courses/${id}/`),
-  // Module Management (Admin & Instructors)
   modules: (params) => api.get("/lms/modules/", { params }),
   module: (id) => api.get(`/lms/modules/${id}/`),
   createModule: (payload) => api.post("/lms/modules/", payload),
   updateModule: (id, payload) => api.put(`/lms/modules/${id}/`, payload),
   deleteModule: (id) => api.delete(`/lms/modules/${id}/`),
-  // Report Generation (Admin only)
   generateReport: (params) => api.get("/lms/reports/", { params }),
 };
 
