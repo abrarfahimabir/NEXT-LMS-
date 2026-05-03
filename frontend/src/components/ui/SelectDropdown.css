@@ -207,9 +207,9 @@
   backdrop-filter: blur(24px);
   transform-origin: top center;
   will-change: transform, opacity;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(99, 102, 241, 0.3) transparent;
+
 }
+
 
 /* Subtle glass overlay grain */
 .premium-select__dropdown::before {
