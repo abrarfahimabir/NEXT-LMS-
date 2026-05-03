@@ -122,9 +122,11 @@
     box-shadow var(--select-transition-smooth),
     transform var(--select-transition-fast);
   overflow: hidden;
+  -webkit-user-select: none;
   user-select: none;
-  backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+
 }
 
 .premium-select__trigger:hover {
@@ -296,8 +298,8 @@
   border: 1.5px solid var(--border);
   border-radius: var(--select-radius-options);
   box-shadow: var(--select-shadow-lg);
-  backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
   transform-origin: top center;
   will-change: transform, opacity;
 }
@@ -417,11 +419,7 @@
   background: rgba(255, 255, 255, 0.25);
 }
 
-/* Firefox scrollbar */
-.premium-select__options {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
-}
+
 
 /* ==========================================
    Option Group Header
@@ -431,6 +429,7 @@
   align-items: center;
   gap: 0.75rem;
   padding: 0.625rem 0.75rem 0.375rem;
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -470,6 +469,7 @@
     color var(--select-transition-fast),
     transform var(--select-transition-fast);
   overflow: hidden;
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -750,11 +750,7 @@
 /* ==========================================
    Theme: Light Mode (future)
    ========================================== */
-@media (prefers-color-scheme: light) {
-  :root {
-    /* Future light theme tokens */
-  }
-}
+/* Future light theme tokens - to be implemented */
 
 /* ==========================================
    Reduced Motion
