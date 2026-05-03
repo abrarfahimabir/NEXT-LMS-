@@ -7,7 +7,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         User = get_user_model()
 
-        username = 'abrarfahim  '
+        username = 'abrarfahim'
         email = 'abrarfahim448@gmail.com'
         password = '7340@Abir' 
 
