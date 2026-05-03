@@ -1,11 +1,9 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import React, { useEffect, useState, useMemo, useCallback } from "react";
-import { FiEdit2, FiPlus, FiSearch, FiTrash2, FiBookOpen, FiX, FiCheck, FiLoader, FiLayers, FiArrowRight, FiArrowLeft, FiBook } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { FiEdit2, FiPlus, FiTrash2, FiBookOpen, FiX, FiCheck, FiLoader, FiLayers, FiBook } from "react-icons/fi";
 
 import { useAuth } from "../context/AuthContext";
 import { lmsApi } from "../lib/api";
-import { modalVariants, moduleCardVariants, buttonPressVariants } from "../lib/animations";
 import Card from "./ui/Card";
 import SectionHeading from "./ui/SectionHeading";
 import Skeleton from "./ui/Skeleton";
@@ -34,7 +32,6 @@ const ModuleManagement = () => {
     return courses.map(course => ({
       value: course.id,
       label: course.title,
-      group: course.instructor_name || "All Course",
       icon: <FiBook size={14} />,
     }));
   }, [courses]);
@@ -45,6 +42,7 @@ const ModuleManagement = () => {
 
   // Loading states
   const [loadingSubmit, setLoadingSubmit] = useState(false);
+  const [preventHover, setPreventHover] = useState(false);
 
   // Toast
   const { toasts, removeToast, success, error: showError } = useToast();
@@ -85,7 +83,9 @@ const ModuleManagement = () => {
     const course = courses.find(c => c.id === parseInt(courseId));
     setSelectedCourse(course);
     if (courseId) {
+      setPreventHover(true);
       fetchModules(courseId);
+      setTimeout(() => setPreventHover(false), 300);
     } else {
       setModules([]);
     }
@@ -191,212 +191,328 @@ const ModuleManagement = () => {
     );
   }
 
+  // Animation variants for staggered children
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.08,
+        delayChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { 
+      opacity: 0, 
+      y: 20, 
+      scale: 0.95 
+    },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      scale: 1,
+      transition: {
+        type: "spring",
+        stiffness: 300,
+        damping: 25
+      }
+    }
+  };
+
+  const moduleCardVariants = {
+    hidden: { 
+      opacity: 0, 
+      y: 24,
+      scale: 0.97
+    },
+    visible: (i) => ({ 
+      opacity: 1, 
+      y: 0, 
+      scale: 1,
+      transition: {
+        type: "spring",
+        stiffness: 280,
+        damping: 30,
+        delay: i * 0.06
+      }
+    })
+  };
+
   return (
     <div className="layout-stack">
       <ToastContainer toasts={toasts} removeToast={removeToast} />
       
       <SectionHeading
         eyebrow="Module Management"
-        title="Manage Modules"
-        description="Create, edit, and organize modules within programs. Admins can manage all programs, lead professionals can manage their own."
+        title="Course Modules"
+        description="Create, edit, and organize modules within courses. Admins can manage all courses, instructors can manage their own."
       />
 
-      {/* Premium Program Selection Dropdown */}
-      <Card className="selection-card ui-card--padding-md">
-        <SelectDropdown
-          label="Select Program"
-          value={selectedCourse?.id || ""}
-          onChange={(value) => handleCourseSelect(value)}
-          options={courseOptions}
-          placeholder="Choose a program..."
-          searchable
-          size="md"
-          helperText="Select a program to manage its modules"
-          prefix={<FiBook size={16} />}
-        />
-      </Card>
+      {/* Premium Course Selection Dropdown */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ type: "spring", stiffness: 300, damping: 25 }}
+      >
+        <Card className="selection-card ui-card--padding-md">
+          <SelectDropdown
+            label="Select Course"
+            value={selectedCourse?.id || ""}
+            onChange={(value) => handleCourseSelect(value)}
+            options={courseOptions}
+            placeholder="Choose a course..."
+            searchable
+            size="md"
+            helperText="Select a course to manage its modules"
+            prefix={<FiBook size={16} />}
+          />
+        </Card>
+      </motion.div>
 
-{/* Modules for Selected Course - Enhanced Card Grid Style */}
-      {selectedCourse && (
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          <div className="module-header">
-            <div className="module-header__info">
-              <h3 className="module-header__title">
-                <FiBookOpen /> {selectedCourse.title}
-              </h3>
-              <p className="module-header__meta">
-                {modules.length} module{modules.length !== 1 ? "s" : ""} • {selectedCourse.instructor_name}
-              </p>
+      {/* Modules for Selected Course */}
+      <AnimatePresence mode="wait">
+        {selectedCourse && (
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ type: "spring", stiffness: 300, damping: 25 }}
+          >
+            <div className="module-header">
+              <div className="module-header__info">
+                <h3 className="module-header__title">
+                  <FiBookOpen /> {selectedCourse.title}
+                </h3>
+                <p className="module-header__meta">
+                  {modules.length} module{modules.length !== 1 ? "s" : ""} • {selectedCourse.instructor_name}
+                </p>
+              </div>
+              <motion.button 
+                onClick={openCreateModal} 
+                className="ui-button ui-button--primary"
+                disabled={!selectedCourse}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+              >
+                <FiPlus /> Add Module
+              </motion.button>
             </div>
-            <button 
-              onClick={openCreateModal} 
-              className="ui-button ui-button--primary"
-              disabled={!selectedCourse}
-            >
-              <FiPlus /> Add Module
-            </button>
-          </div>
 
-          {loadingModules ? (
-            <div className="module-list-admin">
-              {Array.from({ length: 3 }).map((_, index) => (
-                <Skeleton key={index} className="module-card-admin" style={{ height: "8rem" }} />
-              ))}
-            </div>
-          ) : modules.length > 0 ? (
-            <motion.div layout className="module-list-admin">
-           {modules.map((module, index) => (
-                 <motion.div
-                   key={module.id}
-                   layout
-                   initial={{ opacity: 0, y: 18 }}
-                   animate={{ opacity: 1, y: 0 }}
-                   transition={{ delay: index * 0.05 }}
-                   whileHover={{ y: -8, scale: 1.02 }}
-                   whileTap={{ scale: 0.98 }}
-                   className="module-card-admin"
-                 >
-                  <div className="module-card-admin__number">
-                    {index + 1}
-                  </div>
-                  <div className="module-card-admin__content">
-                    <h4 className="module-card-admin__title">{module.title}</h4>
-                    <p className="module-card-admin__desc">{module.description || "No description"}</p>
-                    <div className="module-card-admin__meta">
-                      <FiLayers />
-                      <span>{module.lessons?.length || 0} unit{module.lessons?.length !== 1 ? "s" : ""}</span>
+            {loadingModules ? (
+              <motion.div 
+                className="module-list-admin"
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+              >
+                {Array.from({ length: 3 }).map((_, index) => (
+                  <Skeleton key={index} className="module-card-admin" style={{ height: "8rem" }} />
+                ))}
+              </motion.div>
+            ) : modules.length > 0 ? (
+              <motion.div 
+                layout
+                className="module-list-admin"
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+              >
+                {modules.map((module, index) => (
+                  <motion.div
+                    key={module.id}
+                    layout
+                    custom={index}
+                    variants={moduleCardVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit={{ 
+                      opacity: 0, 
+                      y: -12, 
+                      scale: 0.95,
+                      transition: { duration: 0.2 }
+                    }}
+                    whileHover={{ 
+                      y: -6, 
+                      scale: 1.015,
+                      transition: { type: "spring", stiffness: 400, damping: 25 }
+                    }}
+                    className="module-card-admin"
+                  >
+                    <div className="module-card-admin__number">
+                      {index + 1}
                     </div>
-                  </div>
-                  <div className="module-card-admin__actions">
-                    <button
-                      onClick={() => openEditModal(module)}
-                      className="action-btn action-btn--edit"
-                      title="Edit module"
-                    >
-                      <FiEdit2 />
-                    </button>
-                    <button
-                      onClick={() => confirmDelete(module)}
-                      className="action-btn action-btn--delete"
-                      title="Delete module"
-                    >
-                      <FiTrash2 />
-                    </button>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          ) : (
-            <div className="empty-state">
-              <FiLayers className="empty-icon" />
-              <p>No modules yet</p>
-              <button onClick={openCreateModal} className="ui-button ui-button--primary">
-                <FiPlus /> Create First Module
-              </button>
-            </div>
-          )}
-        </motion.div>
-      )}
+                    <div className="module-card-admin__content">
+                      <h4 className="module-card-admin__title">{module.title}</h4>
+                      <p className="module-card-admin__desc">{module.description || "No description"}</p>
+                      <div className="module-card-admin__meta">
+                        <FiLayers />
+                        <span>{module.lessons?.length || 0} unit{module.lessons?.length !== 1 ? "s" : ""}</span>
+                      </div>
+                    </div>
+                    <div className="module-card-admin__actions">
+                      <motion.button
+                        onClick={() => openEditModal(module)}
+                        className="action-btn action-btn--edit"
+                        title="Edit module"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                      >
+                        <FiEdit2 />
+                      </motion.button>
+                      <motion.button
+                        onClick={() => confirmDelete(module)}
+                        className="action-btn action-btn--delete"
+                        title="Delete module"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                      >
+                        <FiTrash2 />
+                      </motion.button>
+                    </div>
+                  </motion.div>
+                ))}
+              </motion.div>
+            ) : (
+              <motion.div
+                className="empty-state"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ type: "spring", stiffness: 300, damping: 25 }}
+              >
+                <FiLayers className="empty-icon" />
+                <p>No modules yet</p>
+                <motion.button 
+                  onClick={openCreateModal} 
+                  className="ui-button ui-button--primary"
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  <FiPlus /> Create First Module
+                </motion.button>
+              </motion.div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Empty State when no course selected */}
       {!loading && !selectedCourse && (
-        <div className="empty-state">
+        <motion.div
+          className="empty-state"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ type: "spring", stiffness: 300, damping: 25 }}
+        >
           <FiBookOpen className="empty-icon" />
-          <p>Select a program to manage its modules</p>
-        </div>
+          <p>Select a course to manage its modules</p>
+        </motion.div>
       )}
 
       {/* Create/Edit Modal */}
-      {showModal && (
-        <div className="modal-overlay" onClick={() => !loadingSubmit && setShowModal(false)}>
+      <AnimatePresence>
+        {showModal && (
           <motion.div
-            className="modal-content modal-content--module"
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            onClick={(e) => e.stopPropagation()}
+            className="modal-overlay"
+            onClick={() => !loadingSubmit && setShowModal(false)}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
           >
-            <div className="modal-header">
-              <h2>{editingModule ? "Edit Module" : "Create New Module"}</h2>
-              <button
-                onClick={() => setShowModal(false)}
-                className="modal-close"
-                disabled={loadingSubmit}
-              >
-                <FiX />
-              </button>
-            </div>
-
-            <form onSubmit={handleSubmit} className="modal-form">
-              <div className="form-group">
-                <label>Module Title *</label>
-                <input
-                  type="text"
-                  value={formData.title}
-                  onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  required
-                  disabled={loadingSubmit}
-                  placeholder="e.g., Getting Started"
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Description</label>
-                <textarea
-                  value={formData.description}
-                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  rows={3}
-                  disabled={loadingSubmit}
-                   placeholder="What will students learn in this module?"
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Order</label>
-                <input
-                  type="number"
-                  value={formData.order}
-                  onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) })}
-                  min={1}
-                  disabled={loadingSubmit}
-                />
-                <span className="form-hint">Order in which this module appears in the program</span>
-              </div>
-
-              <div className="modal-actions">
-                <button
-                  type="button"
+            <motion.div
+              className="modal-content modal-content--module"
+              initial={{ opacity: 0, scale: 0.92, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.92, y: 20 }}
+              transition={{ type: "spring", stiffness: 400, damping: 30 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="modal-header">
+                <h2>{editingModule ? "Edit Module" : "Create New Module"}</h2>
+                <motion.button
                   onClick={() => setShowModal(false)}
-                  className="ui-button ui-button--secondary"
+                  className="modal-close"
                   disabled={loadingSubmit}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
                 >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="ui-button ui-button--primary"
-                  disabled={loadingSubmit}
-                >
-                  {loadingSubmit ? (
-                    <FiLoader className="spinner" />
-                  ) : editingModule ? (
-                    <>
-                      <FiCheck /> Save Changes
-                    </>
-                  ) : (
-                    <>
-                      <FiPlus /> Create Module
-                    </>
-                  )}
-                </button>
+                  <FiX />
+                </motion.button>
               </div>
-            </form>
+
+              <form onSubmit={handleSubmit} className="modal-form">
+                <div className="form-group">
+                  <label>Module Title *</label>
+                  <input
+                    type="text"
+                    value={formData.title}
+                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                    required
+                    disabled={loadingSubmit}
+                    placeholder="e.g., Getting Started"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Description</label>
+                  <textarea
+                    value={formData.description}
+                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                    rows={3}
+                    disabled={loadingSubmit}
+                     placeholder="What will students learn in this module?"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Order</label>
+                  <input
+                    type="number"
+                    value={formData.order}
+                    onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) })}
+                    min={1}
+                    disabled={loadingSubmit}
+                  />
+                  <span className="form-hint">Order in which this module appears in the course</span>
+                </div>
+
+                <div className="modal-actions">
+                  <motion.button
+                    type="button"
+                    onClick={() => setShowModal(false)}
+                    className="ui-button ui-button--secondary"
+                    disabled={loadingSubmit}
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                  >
+                    Cancel
+                  </motion.button>
+                  <motion.button
+                    type="submit"
+                    className="ui-button ui-button--primary"
+                    disabled={loadingSubmit}
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                  >
+                    {loadingSubmit ? (
+                      <FiLoader className="spinner" />
+                    ) : editingModule ? (
+                      <>
+                        <FiCheck /> Save Changes
+                      </>
+                    ) : (
+                      <>
+                        <FiPlus /> Create Module
+                      </>
+                    )}
+                  </motion.button>
+                </div>
+              </form>
+            </motion.div>
           </motion.div>
-        </div>
-      )}
+        )}
+      </AnimatePresence>
 
       {/* Delete Confirmation Dialog */}
       <ConfirmationDialog

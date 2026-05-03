@@ -171,9 +171,9 @@ const Profile = () => {
   return (
     <div className="layout-stack">
       <SectionHeading
-        eyebrow="Profile Center"
-        title="Manage your identity, professional journey, and account security."
-        description="Role-aware profile fields, quick password updates, and a cleaner snapshot of current student activity."
+        eyebrow="LMS Profile"
+        title="Manage your learning profile and account settings."
+        description="View your enrolled courses, update your credentials, and customize your learning experience."
       />
 
       {message ? <div className="message-banner message-banner--success">{message}</div> : null}
@@ -367,7 +367,7 @@ const Profile = () => {
 
           <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}>
             <Card className="side-card">
-              <h3 style={{ marginTop: 0 }}>{user?.role === "student" ? "Enrolled programs" : "Role summary"}</h3>
+              <h3 style={{ marginTop: 0 }}>{user?.role === "student" ? "Enrolled courses" : "Account summary"}</h3>
               <div className="stack-list">
                 {user?.role === "student" ? (
                   enrollments.length ? (
@@ -378,12 +378,12 @@ const Profile = () => {
                       </div>
                     ))
                   ) : (
-                    <p className="subtle-text">You have not enrolled in any programs yet.</p>
+                    <p className="subtle-text">You have not enrolled in any courses yet.</p>
                   )
                 ) : (
                   <>
                     <div className="summary-box">Email verified: {profile?.email_verified ? "Yes" : "No"}</div>
-                    <div className="summary-box">Lead expertise: {profile?.expertise || "Add your professional focus"}</div>
+                    <div className="summary-box">Role: {profile?.role || "student"}</div>
                   </>
                 )}
               </div>

@@ -19,7 +19,7 @@ import { useAuth } from "../context/AuthContext";
 import Button from "./ui/Button";
 
 const navItems = [
-  { to: "/courses", label: "Programs", icon: FiBookOpen },
+  { to: "/courses", label: "Courses", icon: FiBookOpen },
   { to: "/dashboard", label: "Dashboard", icon: FiGrid },
   { to: "/users", label: "Users", icon: FiUsers, requiredRole: "admin" },
   { to: "/enrollments", label: "Enrollments", icon: FiUserCheck, requiredRole: ["admin", "instructor"] },
@@ -298,7 +298,7 @@ return (
                 </h2>
               </div>
               <div className="sidebar__intro">
-                Explore your learning space with modern dashboards and curated learning journeys.
+                Explore your learning space with course management and progress tracking.
               </div>
               <nav className="sidebar__nav">
                 {navItems.map(({ to, label, icon: Icon, requiredRole }) => {
@@ -325,11 +325,11 @@ return (
               <div className="sidebar__actions">
                 <button className="sidebar__action">
                   <FiHeart />
-                  Wishlist
+                  My Courses
                 </button>
                 <button className="sidebar__action sidebar__action--accent">
                   <FiCompass />
-                  Guided paths
+                  Learning Paths
                 </button>
                 <button className="sidebar__action sidebar__action--danger" onClick={handleLogout}>
                   <FiLogOut />

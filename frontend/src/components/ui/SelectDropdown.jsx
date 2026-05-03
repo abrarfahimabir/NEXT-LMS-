@@ -7,7 +7,7 @@ import "./SelectDropdown.css";
  * Premium SelectDropdown Component
  * 
  * A highly engineered, accessible dropdown with fluid animations, micro-interactions,
- * and sophisticated visual hierarchy. Built with Framer Motion and Tailwind CSS.
+ * and sophisticated visual hierarchy. Built with Framer Motion.
  * 
  * Features:
  * - Spring-physics based animations with custom easing
@@ -63,11 +63,19 @@ const SelectDropdown = ({
   const searchInputRef = useRef(null);
   const optionsRef = useRef([]);
   
-  // Magnetic effect motion values
+  // Magnetic effect motion values with spring physics
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  const magneticX = useSpring(useTransform(mouseX, [0, 1], [0, 4]), { stiffness: 350, damping: 25 });
-  const magneticY = useSpring(useTransform(mouseY, [0, 1], [0, 2]), { stiffness: 350, damping: 25 });
+  const magneticX = useSpring(useTransform(mouseX, [0, 1], [0, 6]), { 
+    stiffness: 400, 
+    damping: 30,
+    restDelta: 0.001 
+  });
+  const magneticY = useSpring(useTransform(mouseY, [0, 1], [0, 3]), { 
+    stiffness: 400, 
+    damping: 30,
+    restDelta: 0.001 
+  });
 
   // Filter options based on search
   const filteredOptions = useMemo(() => {
@@ -131,7 +139,7 @@ const SelectDropdown = ({
     return value === optValue;
   }, [value, multi]);
 
-  // Handle selection
+  // Handle selection with spring animation
   const handleSelect = useCallback((opt) => {
     if (disabled || loading || opt.disabled) return;
     
@@ -146,9 +154,12 @@ const SelectDropdown = ({
       onChange(newValue);
     } else {
       onChange(opt.value);
-      setIsOpen(false);
-      setSearch("");
-      setFocusedIndex(-1);
+      // Add small delay before closing to prevent immediate hover on first module
+      setTimeout(() => {
+        setIsOpen(false);
+        setSearch("");
+        setFocusedIndex(-1);
+      }, 50);
     }
   }, [value, multi, onChange, disabled, loading]);
 
@@ -299,6 +310,56 @@ const SelectDropdown = ({
     className,
   ].filter(Boolean).join(" ");
 
+  // Spring-based dropdown animation variants
+  const dropdownVariants = {
+    hidden: { 
+      opacity: 0, 
+      scale: 0.92, 
+      y: -8,
+      transition: { 
+        type: "spring",
+        stiffness: 400,
+        damping: 30 
+      }
+    },
+    visible: { 
+      opacity: 1, 
+      scale: 1, 
+      y: 0,
+      transition: { 
+        type: "spring",
+        stiffness: 400,
+        damping: 30,
+        restDelta: 0.001
+      }
+    }
+  };
+
+  const optionVariants = {
+    hidden: { 
+      opacity: 0, 
+      x: -12, 
+      scale: 0.95,
+      transition: { 
+        type: "spring",
+        stiffness: 500,
+        damping: 30
+      }
+    },
+    visible: (custom) => ({
+      opacity: 1, 
+      x: 0, 
+      scale: 1,
+      transition: {
+        type: "spring",
+        stiffness: 400,
+        damping: 25,
+        delay: custom * 0.035,
+        restDelta: 0.001
+      }
+    })
+  };
+
   return (
     <div ref={containerRef} className={containerClass}>
       {label && (
@@ -320,128 +381,121 @@ const SelectDropdown = ({
         aria-invalid={!!error}
         tabIndex={disabled ? -1 : 0}
         style={{ x: magneticX, y: magneticY }}
-        initial={{ opacity: 0, y: 8 }}
+        initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        whileHover={{ scale: 1.01 }}
-        whileTap={{ scale: 0.985 }}
+        whileHover={{ scale: 1.015 }}
+        whileTap={{ scale: 0.98 }}
+        transition={{ type: "spring", stiffness: 500, damping: 30 }}
       >
+        {prefix && <span className="premium-select__prefix">{prefix}</span>}
         <span className="flex-1 truncate">{displayLabel}</span>
-        <FiChevronDown className={`transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+        {loading ? (
+          <FiLoader className="animate-spin" />
+        ) : (
+          <FiChevronDown className={`transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+        )}
       </motion.div>
 
-       <AnimatePresence>
-         {isOpen && (
-           <motion.div
-             className="premium-select__dropdown absolute z-[9999] w-full mt-1 bg-white/20 backdrop-blur-md border border-white/20 shadow-lg rounded-lg max-h-60 overflow-hidden"
-             initial={{ opacity: 0, scale: 0.95, y: -10 }}
-             animate={{ opacity: 1, scale: 1, y: 0 }}
-             exit={{ opacity: 0, scale: 0.95, y: -10 }}
-           >
-
-              {Object.entries(groupedOptions).map(([group, opts], groupIndex) => {
-                const optionIndexOffset = flatOptions.slice(0, focusedIndex + 1).filter(item => item.type !== 'group-header').length;
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            className="premium-select__dropdown"
+            variants={dropdownVariants}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+          >
+            {Object.entries(groupedOptions).map(([group, opts], groupIndex) => (
+              <React.Fragment key={group}>
+                {group !== "ungrouped" && (
+                  <motion.div
+                    className="premium-select__group-header"
+                    initial={{ opacity: 0, x: -8 }}
+                    animate={{ 
+                      opacity: 1, 
+                      x: 0,
+                      transition: {
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 25,
+                        delay: groupIndex * 0.05
+                      }
+                    }}
+                  >
+                    <span className="premium-select__group-label">{group}</span>
+                    <div className="premium-select__group-line" />
+                  </motion.div>
+                )}
                 
-                return (
-                  <React.Fragment key={group}>
-                    {group !== "ungrouped" && (
-                      <motion.div
-                        className="premium-select__group-header"
-                        initial={{ opacity: 0, x: -8 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -8 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <span className="premium-select__group-label">{group}</span>
-                        <div className="premium-select__group-line" />
-                      </motion.div>
-                    )}
-                    
-                           {opts.map((opt, idx) => {
-                       const flatIndex = flatOptions.findIndex(item => item.value === opt.value);
-                       const selected = isSelected(opt.value);
-                       const isFocused = focusedIndex === flatIndex;
-                       
-                       return (
-                         <motion.div
-                           key={opt.value}
-                           id={`option-${flatIndex}`}
-                           ref={(el) => { if (el) optionsRef.current[flatIndex] = el; }}
-                           className={`premium-select__option ${selected ? "premium-select__option--selected" : ""} ${isFocused ? "premium-select__option--focused" : ""} ${opt.disabled ? "premium-select__option--disabled" : ""}`}
-                           onClick={(e) => {
-                             e.stopPropagation();
-                             if (!opt.disabled) handleSelect(opt);
-                           }}
-                           role="option"
-                           aria-selected={selected}
-                           aria-disabled={opt.disabled}
-                           tabIndex={-1}
-                           initial={{ opacity: 0, x: -12, scale: 0.95 }}
-                           animate={{ 
-                             opacity: 1, 
-                             x: 0, 
-                             scale: 1,
-                             transition: {
-                               delay: flatIndex * 0.04,
-                               duration: 0.3,
-                               ease: [0.25, 0.1, 0.25, 1],
-                             },
-                           }}
-                           exit={{ 
-                             opacity: 0, 
-                             x: -8, 
-                             scale: 0.95,
-                             transition: { duration: 0.15 },
-                           }}
-                            whileHover={!opt.disabled ? {
-                              scale: 1.01,
-                              transition: { duration: 0.2, ease: "easeOut" }
-                            } : {}}
-                           whileTap={!opt.disabled ? { scale: 0.99 } : {}}
-                           layout
-                         >
-                          {opt.icon && (
-                            <span className="premium-select__option-icon">
-                              {opt.icon}
-                            </span>
-                          )}
-                          <span className="premium-select__option-label">
-                            {opt.label}
-                          </span>
-                          {selected && (
-                            <motion.span
-                              className="premium-select__option-check"
-                              initial={{ scale: 0 }}
-                              animate={{ scale: 1 }}
-                              exit={{ scale: 0 }}
-                              transition={{ type: "spring" }}
-                            >
-                              <FiCheck />
-                            </motion.span>
-                          )}
-                          {isFocused && (
-                            <motion.span
-                              className="premium-select__option-focus-glow"
-                              layoutId="option-focus"
-                            />
-                          )}
-                        </motion.div>
-                      );
-                    })}
-                  </React.Fragment>
-                );
-              })}
-
-            {multi && Array.isArray(value) && value.length > 0 && (
-              <motion.div 
-                className="premium-select__footer"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 8 }}
-              >
-                <span>{value.length} selected</span>
-                <button type="button" onClick={() => onChange([])}>Clear</button>
-              </motion.div>
-            )}
+                {opts.map((opt, idx) => {
+                  const flatIndex = flatOptions.findIndex(item => item.value === opt.value);
+                  const selected = isSelected(opt.value);
+                  const isFocused = focusedIndex === flatIndex;
+                  
+                  return (
+                    <motion.div
+                      key={opt.value}
+                      id={`option-${flatIndex}`}
+                      ref={(el) => { if (el) optionsRef.current[flatIndex] = el; }}
+                      className={`premium-select__option ${selected ? "premium-select__option--selected" : ""} ${isFocused ? "premium-select__option--focused" : ""} ${opt.disabled ? "premium-select__option--disabled" : ""}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (!opt.disabled) handleSelect(opt);
+                      }}
+                      role="option"
+                      aria-selected={selected}
+                      aria-disabled={opt.disabled}
+                      tabIndex={-1}
+                      variants={optionVariants}
+                      custom={flatIndex}
+                      initial="hidden"
+                      animate="visible"
+                      exit="hidden"
+                      whileHover={!opt.disabled ? { 
+                        scale: 1.02, 
+                        transition: { 
+                          type: "spring",
+                          stiffness: 500,
+                          damping: 25 
+                        }
+                      } : {}}
+                      whileTap={!opt.disabled ? { scale: 0.98 } : {}}
+                      layout
+                    >
+                      {opt.icon && (
+                        <span className="premium-select__option-icon">
+                          {opt.icon}
+                        </span>
+                      )}
+                      <span className="premium-select__option-label">
+                        {opt.label}
+                      </span>
+                      {selected && (
+                        <motion.span
+                          className="premium-select__option-check"
+                          initial={{ scale: 0, rotate: -180 }}
+                          animate={{ scale: 1, rotate: 0 }}
+                          exit={{ scale: 0, rotate: 180 }}
+                          transition={{ 
+                            type: "spring",
+                            stiffness: 600,
+                            damping: 20 
+                          }}
+                        >
+                          <FiCheck />
+                        </motion.span>
+                      )}
+                      {isFocused && (
+                        <motion.span
+                          className="premium-select__option-focus-glow"
+                          layoutId="option-focus"
+                        />
+                      )}
+                    </motion.div>
+                  );
+                })}
+              </React.Fragment>
+            ))}
           </motion.div>
         )}
       </AnimatePresence>
@@ -470,4 +524,3 @@ const SelectDropdown = ({
 };
 
 export default SelectDropdown;
-

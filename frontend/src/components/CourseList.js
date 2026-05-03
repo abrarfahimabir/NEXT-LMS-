@@ -138,7 +138,7 @@ const CourseList = () => {
             <FiSearch />
             <input
               className="input-shell__field"
-              placeholder="Search programs, lead professionals, categories"
+              placeholder="Search courses, instructors, topics..."
               value={search}
               onChange={(event) => setSearch(event.target.value)}
             />
@@ -258,7 +258,7 @@ const CourseList = () => {
 
           <div className="pagination-row">
             <p className="subtle-text">
-              Showing {pagedCourses.length} of {filteredCourses.length} programs
+              Showing {pagedCourses.length} of {filteredCourses.length} courses
             </p>
             <div className="inline-actions">
               <Button variant="secondary" disabled={currentPage === 1} onClick={() => setCurrentPage((page) => page - 1)}>

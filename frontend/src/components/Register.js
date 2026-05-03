@@ -66,18 +66,18 @@ const Register = () => {
 
   return (
     <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} className="register-layout">
-      <Card className="register-side">
+<Card className="register-side">
         <div className="ui-card__body" style={{ padding: "2rem" }}>
-          <div className="ui-badge">Onboard smart</div>
-          <h1 className="ui-heading__title" style={{ marginTop: "1rem" }}>Create a role-aware LMS account.</h1>
+          <div className="ui-badge">SkillStream</div>
+          <h1 className="ui-heading__title" style={{ marginTop: "1rem" }}>Create your SkillStream account.</h1>
            <p className="ui-heading__text">
-             Students can explore and enroll, while instructors get profile-first program ownership from day one.
+             Students can explore courses and enroll, while instructors can create and manage programs.
            </p>
           <div className="stack-list" style={{ marginTop: "1.5rem" }}>
             {[
-              "JWT auth with refresh-token flow",
-              "Profile fields for bios, expertise, and avatar URLs",
-              "Role-based dashboards and protected routes",
+              "Secure JWT authentication",
+              "Profile with bio and avatar",
+              "Role-based dashboard access",
             ].map((item) => (
               <div key={item} className="summary-box">{item}</div>
             ))}
@@ -87,7 +87,7 @@ const Register = () => {
 
       <Card className="form-card">
         <div className="ui-card__body">
-          <div className="ui-badge">Join SkillStream</div>
+          <div className="ui-badge">Registration</div>
           <h2 style={{ margin: "1rem 0 0", fontSize: "2rem" }}>Create your account</h2>
           {error ? <div className="message-banner message-banner--error" style={{ marginTop: "1.5rem" }}>{error}</div> : null}
 
@@ -113,7 +113,7 @@ const Register = () => {
             ))}
 
 <label className="form-field" style={{ gridColumn: "1 / -1" }}>
-              <span className="form-field__label">Upload your profile picture</span>
+              <span className="form-field__label">Upload profile picture</span>
               <input
                 className="form-input"
                 name="avatar_url"
@@ -124,8 +124,8 @@ const Register = () => {
             </label>
 
             <label className="form-field" style={{ gridColumn: "1 / -1" }}>
-              <span className="form-field__label">Bio</span>
-              <textarea className="form-textarea" name="bio" value={form.bio} onChange={handleChange} placeholder="Share a short intro" />
+              <span className="form-field__label">Short bio</span>
+              <textarea className="form-textarea" name="bio" value={form.bio} onChange={handleChange} placeholder="Tell us about yourself" />
             </label>
 
             <div className="form-actions" style={{ gridColumn: "1 / -1" }}>
@@ -134,7 +134,7 @@ const Register = () => {
                 <FiArrowRight />
               </Button>
               <p className="subtle-text">
-                Already registered? <Link className="auth-link" to="/login">Sign in</Link>
+                Already have an account? <Link className="auth-link" to="/login">Sign in</Link>
               </p>
             </div>
           </form>

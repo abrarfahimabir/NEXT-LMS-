@@ -381,10 +381,10 @@ const CoursePage = () => {
                            <FiLayers className={`h-4 w-4 ${viewMode === "list" ? "text-primary" : "text-muted-foreground"}`} onClick={() => setViewMode("list")} />
                          </div>
                          
-                         <Button variant="secondary" size="lg">
-                           View wishlist
-                           <FiBookmark />
-                         </Button>
+<Button variant="secondary" size="lg">
+                            My Courses
+                            <FiBookmark />
+                          </Button>
                        </div>
                      </div>
                    </div>

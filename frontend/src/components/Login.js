@@ -36,23 +36,23 @@ const Login = () => {
   return (
     <div className="split-layout">
       <motion.section initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} className="auth-hero layout-stack">
-        <div className="ui-badge">Learn faster</div>
+        <div className="ui-badge">Learning Platform</div>
         <div className="ui-heading">
           <h1 className="ui-heading__title">
-            <span className="ui-heading__title--gradient">A cinematic LMS frontend</span>
+            <span className="ui-heading__title--gradient">SkillStream</span>
             <br />
-            with CSS-only modern UI.
+            with interactive course delivery.
           </h1>
           <p className="ui-heading__text">
-            Smooth transitions, reusable components, analytics-ready dashboards, and a sharper browsing experience without relying on Tailwind utilities.
+            Track progress, manage enrollments, and deliver engaging educational content through our comprehensive platform.
           </p>
         </div>
 
         <div className="metric-grid metric-grid--3">
           {[
-             { label: "Students", value: "5.4k active participants", icon: FiTrendingUp },
-            { label: "Programs", value: "120+ structured tracks", icon: FiPlayCircle },
-            { label: "Completion", value: "92% progress sync", icon: FiArrowRight },
+             { label: "Learners", value: "5.4k active students", icon: FiTrendingUp },
+            { label: "Courses", value: "120+ learning tracks", icon: FiPlayCircle },
+            { label: "Success", value: "92% completion rate", icon: FiArrowRight },
           ].map((item) => (
             <Card key={item.label} className="metric-tile">
               <div className="metric-tile__row">
@@ -66,12 +66,12 @@ const Login = () => {
 
         <Card className="preview-panel ui-card--noise">
           <div className="ui-card__body">
-            <div className="ui-badge">Experience Preview</div>
+            <div className="ui-badge">Platform Preview</div>
             <h3 style={{ margin: "1rem 0 0.75rem", fontSize: "1.6rem" }}>
-              Modern dashboards, program reels, and layered interaction feedback.
+              Course management, student tracking, and interactive learning modules.
             </h3>
             <div className="preview-panel__chips">
-              {["Fast", "Fluid", "Premium"].map((label) => (
+              {["Interactive", "Trackable", "Effective"].map((label) => (
                 <div key={label} className="preview-chip">
                   {label}
                 </div>
@@ -84,18 +84,18 @@ const Login = () => {
       <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }}>
         <Card className="form-card ui-card--noise">
           <div className="ui-card__body">
-            <div className="ui-badge">Welcome back</div>
-            <h2 style={{ margin: "1rem 0 0", fontSize: "2rem" }}>Sign in to continue</h2>
+            <div className="ui-badge">Welcome to SkillStream</div>
+            <h2 style={{ margin: "1rem 0 0", fontSize: "2rem" }}>Sign in to your account</h2>
 
             {error ? <div className="message-banner message-banner--error" style={{ marginTop: "1.5rem" }}>{error}</div> : null}
 
             <form className="form-stack" style={{ marginTop: "1.5rem" }} onSubmit={handleSubmit}>
               <label className="form-field">
                 <span className="form-field__label">Username</span>
-                <div className="input-shell">
-                  <FiMail />
-                  <input className="input-shell__field" name="username" placeholder="Enter your username" value={form.username} onChange={handleChange} required />
-                </div>
+<div className="input-shell">
+                   <FiMail />
+                   <input className="input-shell__field" name="username" placeholder="Enter your email or username" value={form.username} onChange={handleChange} required />
+                 </div>
               </label>
 
               <label className="form-field">
@@ -107,19 +107,19 @@ const Login = () => {
               </label>
 
               <div className="form-actions">
-                <Button type="submit" size="lg" className="w-full" disabled={loading}>
-                  {loading ? "Signing in..." : "Sign in"}
-                  <FiArrowRight />
-                </Button>
+<Button type="submit" size="lg" className="w-full" disabled={loading}>
+                   {loading ? "Signing in..." : "Sign in to SkillStream"}
+                   <FiArrowRight />
+                 </Button>
                 <Button type="button" variant="secondary" size="lg" className="w-full">
                   Continue with Google
                 </Button>
               </div>
             </form>
 
-            <p className="subtle-text" style={{ marginTop: "1.5rem" }}>
-              New here? <Link className="auth-link" to="/register">Create an account</Link>
-            </p>
+<p className="subtle-text" style={{ marginTop: "1.5rem" }}>
+               New to SkillStream? <Link className="auth-link" to="/register">Create an account</Link>
+             </p>
           </div>
         </Card>
       </motion.div>

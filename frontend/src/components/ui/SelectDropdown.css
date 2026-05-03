@@ -126,12 +126,13 @@
   user-select: none;
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
-
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
 .premium-select__trigger:hover {
   background: var(--surface-hover);
   border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
 }
 
 .premium-select__trigger:focus {
@@ -184,124 +185,30 @@
 }
 
 /* ==========================================
-   Value Display
-   ========================================== */
-.premium-select__value {
-  flex: 1;
-  min-width: 0;
-  font-weight: 500;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.premium-select__placeholder {
-  color: var(--text-tertiary);
-  font-weight: 400;
-}
-
-/* ==========================================
-   Clear Button
-   ========================================== */
-.premium-select__clear {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.75rem;
-  height: 1.75rem;
-  border: none;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--text-tertiary);
-  cursor: pointer;
-  flex-shrink: 0;
-  transition: 
-    background-color var(--select-transition-fast),
-    color var(--select-transition-fast),
-    transform var(--select-transition-fast);
-}
-
-.premium-select__clear:hover {
-  background: var(--error-bg);
-  color: var(--error);
-}
-
-.premium-select__clear:active {
-  transform: scale(0.9);
-}
-
-/* ==========================================
-   Chevron Indicator
-   ========================================== */
-.premium-select__chevron {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.5rem;
-  height: 1.5rem;
-  color: var(--text-tertiary);
-  flex-shrink: 0;
-  transition: transform var(--select-transition-smooth);
-}
-
-.premium-select__chevron svg {
-  width: 1.25rem;
-  height: 1.25rem;
-}
-
-.premium-select__chevron--loading svg {
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-/* ==========================================
-   Loading Spinner
-   ========================================== */
-.premium-select__loading {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.875rem;
-  color: var(--text-tertiary);
-}
-
-.premium-select__spinner {
-  width: 1.25rem;
-  height: 1.25rem;
-  border: 2px solid var(--border);
-  border-top-color: var(--primary);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-
-.spinner {
-  animation: spin 0.8s linear infinite;
-}
-
-/* ==========================================
    Dropdown Panel
    ========================================== */
 .premium-select__dropdown {
   position: absolute;
   top: calc(100% + 8px);
   left: 0;
-  z-index: 100;
+  z-index: 1000;
   width: 100%;
   min-width: 280px;
   max-height: 320px;
-  overflow: hidden;
-  background: var(--select-dropdown-bg);
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: linear-gradient(145deg, rgba(19, 19, 33, 0.98), rgba(12, 12, 22, 0.99));
   border: 1.5px solid var(--border);
   border-radius: var(--select-radius-options);
-  box-shadow: var(--select-shadow-lg);
+  box-shadow: 
+    var(--select-shadow-lg),
+    0 0 0 1px rgba(99, 102, 241, 0.1);
   -webkit-backdrop-filter: blur(24px);
   backdrop-filter: blur(24px);
   transform-origin: top center;
   will-change: transform, opacity;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(99, 102, 241, 0.3) transparent;
 }
 
 /* Subtle glass overlay grain */
@@ -317,109 +224,10 @@
   z-index: 0;
 }
 
-/* ==========================================
-   Search Input
-   ========================================== */
-.premium-select__search {
-  position: relative;
-  display: flex;
-  align-items: center;
-  padding: 0.625rem 0.75rem;
-  border-bottom: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.02);
-  z-index: 1;
-}
-
-.premium-select__search-icon {
-  position: absolute;
-  left: 1.1rem;
-  width: 1rem;
-  height: 1rem;
-  color: var(--text-tertiary);
-  pointer-events: none;
-}
-
-.premium-select__search-input {
-  width: 100%;
-  padding: 0.625rem 2.25rem 0.625rem 2.5rem;
-  border: 1.5px solid var(--border);
-  border-radius: 10px;
-  background: var(--surface);
-  color: var(--text-primary);
-  font-size: 0.875rem;
-  outline: none;
-  transition: 
-    border-color var(--select-transition-fast),
-    box-shadow var(--select-transition-fast),
-    background-color var(--select-transition-fast);
-}
-
-.premium-select__search-input::placeholder {
-  color: var(--text-tertiary);
-}
-
-.premium-select__search-input:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
-  background: var(--surface-hover);
-}
-
-/* Search clear button */
-.premium-select__search-clear {
-  position: absolute;
-  right: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.5rem;
-  height: 1.5rem;
-  border: none;
-  border-radius: 6px;
-  background: transparent;
-  color: var(--text-tertiary);
-  cursor: pointer;
-  transition: 
-    background-color var(--select-transition-fast),
-    color var(--select-transition-fast);
-}
-
-.premium-select__search-clear:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: var(--text-primary);
-}
-
-/* ==========================================
-   Options Container
-   ========================================== */
-.premium-select__options {
-  max-height: 260px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding: 0.5rem;
+.premium-select__dropdown > * {
   position: relative;
   z-index: 1;
 }
-
-/* Custom scrollbar for WebKit */
-.premium-select__options::-webkit-scrollbar {
-  width: 6px;
-}
-
-.premium-select__options::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.premium-select__options::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 3px;
-  transition: background var(--select-transition-fast);
-}
-
-.premium-select__options::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.25);
-}
-
-
 
 /* ==========================================
    Option Group Header
@@ -476,6 +284,8 @@
 .premium-select__option:hover:not(.premium-select__option--disabled) {
   background: var(--primary-rgba);
   color: var(--text-primary);
+  transform: translateX(4px);
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.15);
 }
 
 .premium-select__option--focused:not(.premium-select__option--disabled) {
@@ -487,6 +297,9 @@
   background: var(--select-option-selected);
   color: var(--text-primary);
   font-weight: 500;
+  border-left: 3px solid var(--primary);
+  padding-left: calc(0.875rem - 3px);
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.2);
 }
 
 .premium-select__option--disabled {
@@ -559,76 +372,6 @@
   height: 0.875rem;
 }
 
-/* Pulses for selected option (multi-select) */
-.premium-select__option--selected.premium-select__option-check {
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
-}
-
-@keyframes selectedPulse {
-  0%, 100% {
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 0 5px rgba(99, 102, 241, 0.15);
-  }
-}
-
-.premium-select__option--selected.premium-select__option-check {
-  animation: selectedPulse 2s ease-in-out infinite;
-}
-
-/* ==========================================
-   Empty State
-   ========================================== */
-.premium-select__empty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 2.5rem 1.5rem;
-  text-align: center;
-  color: var(--text-tertiary);
-}
-
-.premium-select__empty-icon {
-  width: 2.5rem;
-  height: 2.5rem;
-  opacity: 0.5;
-}
-
-/* ==========================================
-   Footer (Multi-select count)
-   ========================================== */
-.premium-select__footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.625rem 0.875rem;
-  border-top: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.02);
-  font-size: 0.8125rem;
-}
-
-.premium-select__count {
-  color: var(--text-tertiary);
-}
-
-.premium-select__clear-all {
-  padding: 0.375rem 0.625rem;
-  border: none;
-  border-radius: 6px;
-  background: transparent;
-  color: var(--primary);
-  font-size: 0.8125rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color var(--select-transition-fast);
-}
-
-.premium-select__clear-all:hover {
-  background: rgba(99, 102, 241, 0.1);
-}
-
 /* ==========================================
    Error & Helper Text
    ========================================== */
@@ -645,80 +388,6 @@
   font-size: 0.8125rem;
   color: var(--text-tertiary);
   margin-top: 0.375rem;
-}
-
-/* ==========================================
-   Multi-select Badge (for future enhancement)
-   ========================================== */
-.premium-select__badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.375rem;
-  padding: 0.25rem 0.625rem;
-  border-radius: 6px;
-  background: rgba(99, 102, 241, 0.15);
-  color: var(--primary);
-  font-size: 0.75rem;
-  font-weight: 600;
-}
-
-/* ==========================================
-   Responsive Adjustments
-   ========================================== */
-@media (max-width: 640px) {
-  .premium-select__dropdown {
-    position: fixed;
-    top: auto;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    max-height: 50vh;
-    border-radius: 20px 20px 0 0;
-    border-bottom: none;
-  }
-}
-
-/* ==========================================
-   Animation Keyframes
-   ========================================== */
-@keyframes shimmer-select {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
-}
-
-/* Ripple effect */
-.premium-select__option::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    circle at var(--ripple-x, 50%) var(--ripple-y, 50%),
-    rgba(255, 255, 255, 0.15) 0%,
-    transparent 50%
-  );
-  opacity: 0;
-  transform: scale(0);
-  pointer-events: none;
-}
-
-.premium-select__option.ripple-active::after {
-  animation: ripple 0.5s ease-out;
-}
-
-@keyframes ripple {
-  0% {
-    opacity: 0.5;
-    transform: scale(0);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(2.5);
-  }
 }
 
 /* ==========================================
@@ -748,9 +417,41 @@
 }
 
 /* ==========================================
-   Theme: Light Mode (future)
+   Responsive Adjustments
    ========================================== */
-/* Future light theme tokens - to be implemented */
+@media (max-width: 640px) {
+  .premium-select__dropdown {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-height: 50vh;
+    border-radius: 20px 20px 0 0;
+    border-bottom: none;
+  }
+}
+
+/* ==========================================
+   Custom Scrollbar (WebKit)
+   ========================================== */
+.premium-select__dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+
+.premium-select__dropdown::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.premium-select__dropdown::-webkit-scrollbar-thumb {
+  background: rgba(99, 102, 241, 0.3);
+  border-radius: 3px;
+}
+
+.premium-select__dropdown::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 102, 241, 0.5);
+}
 
 /* ==========================================
    Reduced Motion
@@ -760,7 +461,6 @@
   .premium-select__dropdown,
   .premium-select__option,
   .premium-select__clear,
-  .premium-select__search-clear,
   .premium-select__chevron {
     transition: none !important;
     animation: none !important;

@@ -24,7 +24,7 @@ const Footer = () => {
   return (
     <footer className="site-footer">
       <div className="site-footer__inner">
-        <p className="footer-copyright">© {currentYear} NEXT LMS. All Rights Reserved</p>
+        <p className="footer-copyright">© {currentYear} SkillStream. All Rights Reserved</p>
         <p className="footer-credit">
           Developed by{" "}
           <motion.a
