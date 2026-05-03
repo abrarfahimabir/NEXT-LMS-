@@ -38,7 +38,7 @@ const Footer = () => {
               repeat: Infinity,
               ease: "linear",
             }}
-          >
+          > 
             Abrar Fahim
           </motion.a>
         </p>
