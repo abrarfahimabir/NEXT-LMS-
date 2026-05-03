@@ -43,7 +43,7 @@ Key capabilities include:
 - Git (version control)
 
 ## 4. Setup Instructions
-
+ 
 ### Prerequisites
 - Python 3.8+
 - Node.js 18+
